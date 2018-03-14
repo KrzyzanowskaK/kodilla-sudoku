@@ -25,7 +25,7 @@ public class SudokuGameProcessor {
     public boolean resolveSudoku() {
         Menu menu = new Menu();
         SudokuBoard board = new SudokuBoard();
-        FillSudoku fillSudoku = new FillSudoku();
+        FillSudoku fillSudoku = new FillSudoku(board);
         boolean result = true;
 
         menu.makeChoice();

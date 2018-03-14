@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class FillSudoku {
+    private final SudokuBoard board;
     private CheckSudoku checkSudoku = new CheckSudoku();
     private int randomValue;
     Random random = new Random();
+
+    public FillSudoku(SudokuBoard board) {
+        this.board = board;
+    }
 
     public void resetBoard() {
         for (int i=0; i<9; i++) {
@@ -18,9 +23,9 @@ public class FillSudoku {
 
     public boolean fillBoard(ArrayList<Integer> shoot) {
         boolean isRepeated;
-        isRepeated = checkSudoku.checkBoardSetValue(shoot.get(0), shoot.get(1), shoot.get(2));
+        isRepeated = CheckSudoku.checkBoardSetValue(shoot.get(0), shoot.get(1), shoot.get(2), board);
         if(shoot.size()>3 && shoot.size()<7) {
-            isRepeated = checkSudoku.checkBoardSetValue(shoot.get(3), shoot.get(4), shoot.get(5));
+            isRepeated = CheckSudoku.checkBoardSetValue(shoot.get(3), shoot.get(4), shoot.get(5), board);
         }
         return isRepeated;
     }
@@ -31,14 +36,14 @@ public class FillSudoku {
         for (int numberOfLine = 0; numberOfLine < 9; numberOfLine++) {
             int count = 0;
             levelLoop:
-            while (checkSudoku.countNumbersInLine(numberOfLine) <= number) {
+            while (CheckSudoku.countNumbersInLine(numberOfLine) <= number) {
                 for (int numberOfColumns = 0; numberOfColumns < 9; numberOfColumns++) {
                     randomValue = random.nextInt(10);
                     while (randomValue < 1) {
                         randomValue = random.nextInt(10);
                     }
                     for (int i=0; i<100; i++) {
-                        isRepeated = checkSudoku.checkBoardSetValue(numberOfColumns, numberOfLine, randomValue);
+                        isRepeated = CheckSudoku.checkBoardSetValue(numberOfColumns, numberOfLine, randomValue, board);
                         if (isRepeated) {
                             i++;
                         } else {
@@ -48,13 +53,13 @@ public class FillSudoku {
                     if (isRepeated) {
                         count++;
                     }
-                    if (checkSudoku.countNumbersInLine(numberOfLine) == number) {
+                    if (CheckSudoku.countNumbersInLine(numberOfLine) == number) {
                         break levelLoop;
                     }
                 }
                 if (count > 100) {
                     for (int n=0; n<9; n++) {
-                        checkSudoku.setValue(n, numberOfLine, -1);
+                        CheckSudoku.setValue(n, numberOfLine, -1);
                     }
                     count = 0;
                 }
