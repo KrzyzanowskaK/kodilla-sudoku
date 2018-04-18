@@ -43,7 +43,7 @@ public class SudokuBoard extends Prototype<SudokuBoard> {
         return true; // FIXME
     }
 
-    private boolean checkSquere(int squareNumber, int value) throws Exception {
+    private boolean checkSquare(int squareNumber, int value) throws Exception {
         int startRow = START_ROWS_INDEX_TAB[squareNumber];
         int endRow = startRow + RANGE;
 
